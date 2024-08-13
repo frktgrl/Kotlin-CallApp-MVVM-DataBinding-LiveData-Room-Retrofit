@@ -14,7 +14,9 @@ import com.ftgrl.callapp.R
 import com.ftgrl.callapp.databinding.FragmentInfoBinding
 import com.ftgrl.callapp.ui.viewmodel.InfoViewModel
 import com.ftgrl.callapp.ui.viewmodel.SaveViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InfoFragment : Fragment() {
 
     private lateinit var binding: FragmentInfoBinding
@@ -47,9 +49,7 @@ class InfoFragment : Fragment() {
 
     fun updateButton (id : Int? , name: String, number : String) {
 
-        Log.e("name + number", "$name + $number +$id")
-
-
+        viewModel.updatePerson(id!!,name,number)
     }
 
 

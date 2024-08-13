@@ -10,9 +10,10 @@ import com.ftgrl.callapp.R
 import com.ftgrl.callapp.data.entity.Person
 import com.ftgrl.callapp.databinding.RecyclerRowHomeBinding
 import com.ftgrl.callapp.ui.fragment.HomeFragmentDirections
+import com.ftgrl.callapp.ui.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class RecyclerHomeAdapter(private val personList: List<Person>) : RecyclerView.Adapter<RecyclerHomeAdapter.RowHolder>() {
+class RecyclerHomeAdapter(private val personList: List<Person>, var viewModel: HomeViewModel) : RecyclerView.Adapter<RecyclerHomeAdapter.RowHolder>() {
 
     class RowHolder(val binding : RecyclerRowHomeBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -33,7 +34,7 @@ class RecyclerHomeAdapter(private val personList: List<Person>) : RecyclerView.A
             Snackbar.make(it,"${person.name}  Delete ?",Snackbar.LENGTH_LONG)
                 .setAction("YES"){
 
-                    Log.e("Person Delete",person.id.toString())
+                    viewModel.personDelete(person.id)
                 }.show()
         }
 

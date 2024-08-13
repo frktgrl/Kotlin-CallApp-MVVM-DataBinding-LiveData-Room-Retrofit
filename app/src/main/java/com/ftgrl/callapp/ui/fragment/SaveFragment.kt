@@ -11,8 +11,9 @@ import androidx.fragment.app.viewModels
 import com.ftgrl.callapp.R
 import com.ftgrl.callapp.databinding.FragmentSaveBinding
 import com.ftgrl.callapp.ui.viewmodel.SaveViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SaveFragment : Fragment() {
 
     private lateinit var binding: FragmentSaveBinding
@@ -41,7 +42,7 @@ class SaveFragment : Fragment() {
 
     fun saveButton (name : String , number : String){
 
-        Log.e("name","$name - $number")
+        viewModel.savePerson(name,number)
 
     }
 

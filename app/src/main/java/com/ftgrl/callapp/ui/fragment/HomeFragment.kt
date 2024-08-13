@@ -1,6 +1,7 @@
 package com.ftgrl.callapp.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -20,7 +21,9 @@ import com.ftgrl.callapp.adapter.RecyclerHomeAdapter
 import com.ftgrl.callapp.data.entity.Person
 import com.ftgrl.callapp.databinding.FragmentHomeBinding
 import com.ftgrl.callapp.ui.viewmodel.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(),SearchView.OnQueryTextListener{
 
     private lateinit var binding: FragmentHomeBinding
@@ -35,16 +38,13 @@ class HomeFragment : Fragment(),SearchView.OnQueryTextListener{
         binding.fragmentHome = this
 
 
-        val personList = ArrayList<Person>()
-        val person1 = Person(1,"Faruk","5054660879")
-        val person2 = Person(2,"Fatih","53648951321")
-        val person3 = Person(3,"Furkan","1562566556")
-        personList.add(person1)
-        personList.add(person2)
-        personList.add(person3)
+        viewModel.personsList.observe(viewLifecycleOwner){
 
-        val adapter = RecyclerHomeAdapter(personList)
-        binding.recyclerHomeAdapter= adapter
+            val adapter = RecyclerHomeAdapter(it,viewModel)
+            binding.recyclerHomeAdapter= adapter
+        }
+
+
 
 
 
@@ -92,16 +92,20 @@ class HomeFragment : Fragment(),SearchView.OnQueryTextListener{
 
 
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        TODO("Not yet implemented")
+    override fun onQueryTextSubmit(query: String): Boolean {
+
+        viewModel.search(query)
+        return true
     }
 
-    override fun onQueryTextChange(newText: String?): Boolean {
-        TODO("Not yet implemented")
+    override fun onQueryTextChange(newText: String): Boolean {
+        viewModel.search(newText)
+        return true
     }
 
     override fun onResume() {
         super.onResume()
+        Log.e("Anasayfa Dönüldü","Dönüldü")
     }
 
 }
