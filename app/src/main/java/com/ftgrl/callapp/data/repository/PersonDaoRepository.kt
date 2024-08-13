@@ -3,8 +3,12 @@ package com.ftgrl.callapp.data.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ftgrl.callapp.data.entity.Person
+import com.ftgrl.callapp.room.PersonDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class PersonDaoRepository {
+class PersonDaoRepository (var dao : PersonDao){
 
     val personsList:MutableLiveData<List<Person>>
 
@@ -36,15 +40,10 @@ class PersonDaoRepository {
 
     fun getAllPerson() {
 
-        val personList = ArrayList<Person>()
-        val person1 = Person(1,"Faruk","5054660879")
-        val person2 = Person(2,"Fatih","53648951321")
-        val person3 = Person(3,"Furkan","1562566556")
-        personList.add(person1)
-        personList.add(person2)
-        personList.add(person3)
+       val job = CoroutineScope(Dispatchers.Main).launch {
 
-        personsList.value = personList
+           personsList.value = dao.getAllPerson()
+       }
     }
 
     fun uploadPerson() : MutableLiveData<List<Person>> {
